@@ -1,0 +1,354 @@
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { 
+  ChevronLeft, Rocket, Activity, Grid, TrendingUp, Zap, 
+  Star, Users, ShieldCheck, AlertTriangle, ArrowUpRight, BarChart3, TrendingDown
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import DashboardLayout from '../../components/DashboardLayout';
+import { getSortedPairs } from '../../data/pairs';
+import { useTrading } from '../../context/TradingContext';
+
+const ALL_PAIRS = getSortedPairs();
+
+const STRATEGY_STYLES = {
+  grid: { color: '#A26DFF', label: 'Grid', icon: Grid },
+  dca: { color: '#3B82F6', label: 'DCA', icon: TrendingUp },
+  visual: { color: '#00FF9D', label: 'Visual', icon: Zap },
+  signal: { color: '#F59E0B', label: 'Signal', icon: Activity },
+};
+
+const TemplateDeploy = () => {
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const bot = state?.templateBot;
+  const { connectedExchanges, isPaperTrading } = useTrading();
+
+  const [exchange, setExchange] = useState('');
+  const [pair, setPair] = useState('SOL/USDT');
+  const [investment, setInvestment] = useState(1000);
+  const [isDeploying, setIsDeploying] = useState(false);
+
+  useEffect(() => {
+    if (!bot) {
+      navigate('/bot-hub');
+    }
+  }, [bot, navigate]);
+
+  if (!bot) return null;
+
+  const strategyType = (bot.strategyType || bot.bot_type || 'visual').toLowerCase();
+  const style = STRATEGY_STYLES[strategyType] || STRATEGY_STYLES.visual;
+  const TypeIcon = style.icon;
+
+  const handleDeploy = async () => {
+    if (!exchange && !isPaperTrading) {
+      alert("Please select an exchange");
+      return;
+    }
+
+    setIsDeploying(true);
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      const existingRaw = localStorage.getItem('fydblock_active_bots') || '[]';
+      const existing = JSON.parse(existingRaw);
+
+      const newBot = {
+        id: `db_${Date.now()}`,
+        bot_name: bot.name || bot.bot_name,
+        bot_type: strategyType.toUpperCase(),
+        exchange: exchange || 'PAPER',
+        pair,
+        status: 'RUNNING',
+        created_at: new Date().toISOString(),
+        investment,
+        unrealized_profit: 0,
+        unrealized_profit_pct: 0,
+        // Carry over any graph data for visual bots
+        graph: bot.graph || null,
+        // Mark as derived from a template
+        templateId: bot.id
+      };
+
+      existing.unshift(newBot);
+      localStorage.setItem('fydblock_active_bots', JSON.stringify(existing));
+      
+      navigate('/dashboard/portfolio', { state: { deploySuccess: true } });
+    } catch (err) {
+      console.error(err);
+      alert("Failed to deploy. Please try again.");
+      setIsDeploying(false);
+    }
+  };
+
+  // Mock Reviews based on Bot ID
+  const MOCK_REVIEWS = [
+    { userName: 'CryptoWhale', rating: 5, text: 'Consistently hits the targets. Excellent strategy for current market conditions.' },
+    { userName: 'AlgoPro', rating: 4, text: 'Great for compounding gains. Slightly higher drawdown than expected but manageable.' },
+    { userName: 'GridMaster', rating: 5, text: 'Best template I have found here. Set it and forget it!' }
+  ];
+
+  const rating = bot.rating || 4.5;
+  const usageCount = Number(bot.usageCount) || Math.floor(Math.random() * 500) + 100;
+  
+  // Stats
+  const stats = bot.stats || {
+    totalReturn: 12.5,
+    winRate: 68,
+    maxDrawdown: 4.2
+  };
+
+  return (
+    <DashboardLayout>
+      <div className="h-full flex flex-col p-6 max-w-5xl mx-auto space-y-6">
+        
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => navigate(-1)}
+              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <div>
+              <h1 className="text-2xl font-bold tracking-wide">Deploy Template</h1>
+              <p className="text-gray-400 text-sm">Review bot details and launch instantly.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* LEFT: Bot Details & Reviews */}
+          <div className="lg:col-span-2 space-y-6">
+            
+            {/* Main Info Card */}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-6 relative overflow-hidden"
+            >
+              {/* Background Glow */}
+              <div 
+                className="absolute -top-20 -right-20 w-64 h-64 rounded-full blur-[100px] opacity-20 pointer-events-none"
+                style={{ background: style.color }}
+              />
+
+              <div className="flex items-start gap-6 relative z-10">
+                {/* Bot "Avatar" */}
+                <div 
+                  className="w-24 h-24 rounded-2xl flex items-center justify-center shrink-0 shadow-2xl"
+                  style={{ background: `linear-gradient(135deg, ${style.color}40, ${style.color}10)`, border: `1px solid ${style.color}30` }}
+                >
+                  <TypeIcon size={40} style={{ color: style.color }} />
+                </div>
+
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <h2 className="text-2xl font-bold text-white">{bot.name || bot.bot_name}</h2>
+                    <div 
+                      className="px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider"
+                      style={{ background: `${style.color}15`, color: style.color, border: `1px solid ${style.color}30` }}
+                    >
+                      {style.label}
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-4 text-sm text-gray-400 mb-4">
+                    {typeof bot.author === 'string' && (
+                      <div className="flex items-center gap-2">
+                        <span className="w-5 h-5 rounded-full bg-gradient-to-br from-[#00FF9D]/40 to-[#A26DFF]/40 flex items-center justify-center text-[10px] text-white font-bold">
+                          {bot.author.charAt(0).toUpperCase()}
+                        </span>
+                        {bot.author}
+                      </div>
+                    )}
+                    <div className="flex items-center gap-1.5 text-[#F59E0B]">
+                      <Star size={14} className="fill-current" />
+                      <span className="text-white font-medium">{rating}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Users size={14} />
+                      {usageCount.toLocaleString()} Deployments
+                    </div>
+                  </div>
+
+                  <p className="text-gray-300 leading-relaxed text-sm">
+                    {bot.description || "An advanced automated strategy customized by the community. Deploy it instantly and monitor performance from your portfolio."}
+                  </p>
+                </div>
+              </div>
+
+              {/* Stats Row */}
+              <div className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/[0.05]">
+                <div className="bg-black/20 rounded-xl p-4 border border-white/[0.03]">
+                  <div className="flex items-center gap-2 text-gray-500 mb-2">
+                    <ArrowUpRight size={14} className="text-[#00FF9D]" />
+                    <span className="text-xs">Est. Return</span>
+                  </div>
+                  <div className="text-lg font-bold text-[#00FF9D]">+{stats.totalReturn}%</div>
+                </div>
+                <div className="bg-black/20 rounded-xl p-4 border border-white/[0.03]">
+                  <div className="flex items-center gap-2 text-gray-500 mb-2">
+                    <BarChart3 size={14} className="text-[#A26DFF]" />
+                    <span className="text-xs">Win Rate</span>
+                  </div>
+                  <div className="text-lg font-bold text-white">{stats.winRate}%</div>
+                </div>
+                <div className="bg-black/20 rounded-xl p-4 border border-white/[0.03]">
+                  <div className="flex items-center gap-2 text-gray-500 mb-2">
+                    <TrendingDown size={14} className="text-[#EF4444]" />
+                    <span className="text-xs">Max Drawdown</span>
+                  </div>
+                  <div className="text-lg font-bold text-white">-{stats.maxDrawdown}%</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Reviews Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-6"
+            >
+              <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                <Star size={18} className="text-[#F59E0B]" />
+                Community Reviews
+              </h3>
+              <div className="space-y-4">
+                {MOCK_REVIEWS.map((review, i) => (
+                  <div key={i} className="bg-black/20 rounded-xl p-4 border border-white/[0.02]">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold">
+                          {review.userName.charAt(0)}
+                        </div>
+                        <span className="text-sm font-medium">{review.userName}</span>
+                      </div>
+                      <div className="flex items-center gap-0.5 text-[#F59E0B]">
+                        {[...Array(5)].map((_, j) => (
+                          <Star key={j} size={12} className={j < review.rating ? 'fill-current' : 'text-gray-700'} />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-400 italic">"{review.text}"</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* RIGHT: Deployment Settings */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="space-y-6"
+          >
+            <div className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-6 sticky top-6">
+              <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                <Rocket size={18} className="text-[#00FF9D]" />
+                Deployment Config
+              </h3>
+
+              <div className="space-y-5">
+                {/* Exchange Selection */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 mb-2">Exchange</label>
+                  <select
+                    value={exchange}
+                    onChange={(e) => setExchange(e.target.value)}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#00FF9D] transition-colors appearance-none"
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1em' }}
+                  >
+                    <option value="">Select Exchange</option>
+                    {isPaperTrading && <option value="PAPER">Fydblock Paper Trading</option>}
+                    {(connectedExchanges || []).map(ex => (
+                      <option key={ex.id} value={ex.exchange}>{ex.exchange.toUpperCase()}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Trading Pair */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 mb-2">Trading Pair</label>
+                  <select
+                    value={pair}
+                    onChange={(e) => setPair(e.target.value)}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#00FF9D] transition-colors appearance-none"
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1em' }}
+                  >
+                    {ALL_PAIRS.map(p => (
+                      <option key={p} value={p}>{p}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Investment Amount */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="text-xs font-medium text-gray-400">Total Investment</label>
+                    <span className="text-xs text-gray-500">Available: 53,677 USDT</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={investment}
+                      onChange={(e) => setInvestment(Number(e.target.value))}
+                      className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#00FF9D] transition-colors"
+                      placeholder="e.g., 1000"
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 text-xs font-bold text-[#00FF9D] bg-[#00FF9D]/10 px-2 py-1 rounded-lg">
+                      USDT
+                    </div>
+                  </div>
+                </div>
+
+                {/* Risk Warning */}
+                <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 flex items-start gap-3 mt-2">
+                  <AlertTriangle size={16} className="text-orange-500 shrink-0 mt-0.5" />
+                  <p className="text-[11px] text-orange-400/90 leading-relaxed">
+                    Deploying this bot will grant it automated trading permissions according to your configuration. Please ensure you understand the strategy.
+                  </p>
+                </div>
+
+                {/* Deploy Action */}
+                <button
+                  onClick={handleDeploy}
+                  disabled={isDeploying}
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[#00FF9D] to-[#00E5FF] text-black font-bold text-sm shadow-[0_0_30px_rgba(0,255,157,0.3)] hover:shadow-[0_0_40px_rgba(0,255,157,0.5)] transition-all hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2 mt-4"
+                >
+                  {isDeploying ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                      Deploying...
+                    </>
+                  ) : (
+                    <>
+                      <Rocket size={18} />
+                      Launch Bot
+                    </>
+                  )}
+                </button>
+                
+                <div className="flex items-center justify-center gap-2 text-[10px] text-gray-500 mt-4">
+                  <ShieldCheck size={12} />
+                  Protected by Fydblock Core Security
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+};
+
+export default TemplateDeploy;

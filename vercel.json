@@ -1,0 +1,16 @@
+{
+    "rewrites": [
+        {
+            "source": "/partner",
+            "destination": "https://fydblock-jw9l.vercel.app"
+        },
+        {
+            "source": "/partner/(.*)",
+            "destination": "https://fydblock-jw9l.vercel.app/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}

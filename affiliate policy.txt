@@ -1,0 +1,51 @@
+FydBlock Affiliate Program Policy
+Effective Date: [Insert Date]
+
+Welcome to the FydBlock Affiliate Program. This policy outlines the terms and conditions for participating in our affiliate program. By signing up as an affiliate and sharing your referral link, you agree to comply with the rules set forth below.
+
+1. Commission Structure (Recurring Commissions)
+We value the partners who help grow the FydBlock community. Our program offers a recurring commission model:
+
+Earning Rate: You will earn a [Insert Percentage, e.g., 20%] commission on the subscription fees paid by users who sign up using your unique affiliate link.
+
+Recurring Payouts: This is a lifetime recurring commission. You will receive a commission for the initial subscription payment and every subsequent renewal payment completed by the referred user, for as long as their account remains active and in good standing.
+
+Qualifying Purchases: Commissions are only earned on actual subscription payments received by FydBlock. Free trials, refunded transactions, or disputed charges do not qualify for commissions. If a commission is paid on a transaction that is later refunded, the commission amount will be deducted from your future payouts.
+
+2. Tracking and Attribution
+Cookie Duration: We use cookies to track referrals. Our tracking cookie lasts for [Insert Number, e.g., 60] days. If a user clicks your link and subscribes within this period, the referral will be attributed to you.
+
+Last-Click Attribution: If a user clicks multiple different affiliate links before subscribing, the commission will be awarded to the affiliate whose link was clicked last.
+
+Tracking Accuracy: Commissions are automatically tracked through our affiliate dashboard. We are not responsible for untracked referrals if the user clears their cookies, uses a different browser, or uses ad-blocking software that prevents tracking.
+
+3. Payout Terms
+Minimum Threshold: Commissions will be paid out once your approved balance reaches a minimum of [Insert Amount, e.g., $50].
+
+Payout Schedule: Payouts are processed on a monthly basis. Commissions earned in a given month will be paid out on the [Insert Day, e.g., 15th] of the following month (Net-15 terms) to account for potential refunds.
+
+Payment Methods: Payouts can be requested via [Insert Methods, e.g., USDT (TRC20), bank transfer, or PayPal]. You are responsible for any transaction fees associated with the payout method and for providing accurate payout details.
+
+4. Prohibited Activities
+To maintain the integrity of the FydBlock brand, the following promotional methods are strictly prohibited and will result in immediate termination from the program and forfeiture of unpaid commissions:
+
+Self-Referrals: Creating secondary accounts using your own affiliate link to get a discount on your own subscriptions.
+
+Misleading Claims: Making false promises, exaggerating potential trading profits, or guaranteeing returns. You must clearly state that crypto trading involves risk.
+
+Spamming: Sending unsolicited promotional emails, direct messages, or posting spam links in forums, Discord/Telegram groups, or social media comments.
+
+Brand Bidding (PPC): Bidding on trademarked FydBlock keywords (e.g., "FydBlock," "FydBlock login," "FydBlock promo code") in paid search campaigns (Google Ads, Bing Ads, etc.).
+
+Deceptive Links: Using automatic redirects, hidden iframes, or cookie-stuffing techniques.
+
+5. Affiliate Disclosures
+In accordance with FTC guidelines and global advertising standards, you must clearly disclose your affiliate relationship with FydBlock whenever you share your referral link. A statement such as "This post contains affiliate links, and I may earn a commission if you subscribe to FydBlock" must be visible to users.
+
+6. Termination and Program Changes
+Termination: FydBlock reserves the right to suspend or terminate your affiliate account at any time, with or without cause, especially in cases of fraud, abuse, or violation of this policy.
+
+Changes to Terms: We reserve the right to update the commission rates, payout schedules, or any other terms of this policy at our discretion. Affiliates will be notified of any significant changes via email or the affiliate dashboard.
+
+7. Contact
+If you have questions about your affiliate account, payouts, or promotional strategies, please reach out to our affiliate management team at [Insert Affiliate Support Email, e.g., partners@fydblock.com].

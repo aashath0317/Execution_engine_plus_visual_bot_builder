@@ -1,0 +1,30 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Exclude private/dashboard routes
+Disallow: /dashboard/
+Disallow: /partner/
+Disallow: /invite/
+Disallow: /bot-builder
+Disallow: /portfolio
+Disallow: /backtest
+Disallow: /live-market
+Disallow: /configure-bot
+Disallow: /signature
+Disallow: /my-exchanges
+Disallow: /subscription
+Disallow: /settings
+Disallow: /feedback
+Disallow: /help-center
+Disallow: /notifications
+Disallow: /signin
+Disallow: /signup
+Disallow: /resetpass
+Disallow: /verify-email
+
+# Host
+Host: https://fydblock.com
+
+# Sitemaps
+Sitemap: https://fydblock.com/sitemap_index.xml

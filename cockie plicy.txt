@@ -1,0 +1,81 @@
+Here is a comprehensive, professional Cookie Policy tailored specifically for FydBlock, taking into account its nature as an AI-powered crypto trading automation SaaS platform.
+
+Cookie Policy for FydBlock
+Effective Date: [Insert Current Date]
+
+1. Introduction
+Welcome to FydBlock ("we," "our," or "us"). This Cookie Policy explains how Fydblock Pvt Ltd uses cookies and similar tracking technologies when you visit our website (www.fydblock.com) and use our crypto trading automation platform, terminal, and related services (collectively, the "Platform"). This policy is designed to transparently explain what these technologies are, why we use them, and your rights to control our use of them.
+
+2. What Are Cookies?
+Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by online service providers to facilitate and help to make the interaction between users and websites faster and easier, as well as to provide reporting information.
+
+3. How We Use Cookies
+Because FydBlock provides secure, automated cryptocurrency trading services, cookies are essential to maintaining your session security, remembering your dashboard preferences, and ensuring our trading terminal operates seamlessly. We categorize our cookies as follows:
+
+A. Strictly Necessary (Essential) Cookies
+These cookies are strictly necessary to provide you with the services available through our Platform. They enable core features such as:
+
+Authenticating your login and securing your FydBlock account.
+
+Maintaining your secure session while you configure API keys for exchanges (e.g., Binance, OKX, Kraken).
+
+Processing transactions and ensuring the basic functionality of your trading bots (DCA, Grid, Futures).
+
+Because these cookies are strictly necessary to deliver the Platform, you cannot refuse them without impacting the functioning of our site.
+
+B. Performance and Analytics Cookies
+These cookies collect information that is used either in aggregate form to help us understand how our Platform is being used or how effective our marketing campaigns are. They help us:
+
+Monitor platform latency and uptime, which is critical during high market volatility.
+
+Understand user interaction with the UI to improve the strategy builder and backtesting tools.
+
+Identify and fix bugs or crashes within the trading terminal.
+
+C. Functionality Cookies
+These cookies allow our Platform to remember choices you make when you use it. They are used to:
+
+Remember your user preferences, such as your chosen language, time zone, and theme (e.g., dark mode).
+
+Save your custom dashboard layouts and chart configurations.
+
+Prevent you from having to re-enter your preferences every time you log in.
+
+D. Targeting and Advertising Cookies
+These cookies are used to make advertising messages more relevant to you. They perform functions like:
+
+Preventing the same ad from continuously reappearing.
+
+Ensuring that ads are properly displayed for advertisers.
+
+Tracking the performance of the FydBlock Affiliate program to ensure proper commission attribution.
+
+4. Third-Party Cookies
+In addition to our first-party cookies, we may also use various third-party cookies to report usage statistics of the Platform and deliver advertisements. These may include:
+
+Analytics Providers: (e.g., Google Analytics) to measure traffic and usage trends.
+
+Customer Support: Cookies from live-chat or helpdesk widgets used to assist you with bot configurations.
+
+Payment Processors: To securely manage your Pro plan subscriptions and free trials.
+
+5. Managing Your Cookie Preferences
+You have the right to decide whether to accept or reject non-essential cookies.
+
+Cookie Consent Banner: You can exercise your cookie preferences by clicking on the appropriate opt-in or opt-out options ("Accept All," "Reject All," or "Customize") provided on our website's cookie banner upon your first visit.
+
+Browser Settings: You can set or amend your web browser controls to accept or refuse cookies. If you choose to reject cookies, you may still use our website, but your access to some functionality and areas of our Platform (especially secure dashboard areas) may be restricted or operate incorrectly. As the means by which you can refuse cookies through your web browser controls vary from browser to browser, you should visit your browser's help menu for more information.
+
+6. Updates to This Cookie Policy
+We may update this Cookie Policy from time to time to reflect changes in our technology, regulatory requirements, or business operations. Please revisit this page periodically to stay aware of any changes.
+
+7. Contact Us
+If you have any questions about our use of cookies or other technologies, please contact us at:
+
+Fydblock Pvt Ltd.
+
+Email: info@FydBlock.com
+
+Phone: +94 70 582 0510
+
+Address: 432, Kayar Road, Eravur 2A, Batticaloa, Sri Lanka
