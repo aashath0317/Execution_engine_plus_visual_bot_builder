@@ -268,7 +268,7 @@ const VisualBuilder = () => {
       {/* ─── Publish Modal ─── */}
       {isPublishModalOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9999] flex items-center justify-center p-4">
-          <div className="bg-[#0A0E11] border border-[#00FF9D]/20 rounded-3xl w-full max-w-2xl relative shadow-[0_0_50px_rgba(0,255,157,0.1)] overflow-hidden">
+          <div className="bg-[#0A0E11] border border-[#00FF9D]/20 rounded-3xl w-full max-w-5xl relative shadow-[0_0_50px_rgba(0,255,157,0.1)] overflow-hidden">
             
             {/* Header */}
             <div className="px-8 py-6 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">

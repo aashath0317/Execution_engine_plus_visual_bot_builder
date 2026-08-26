@@ -82,7 +82,7 @@ const PublishBotModal = ({ isOpen, onClose, bot, onPublish }) => {
             transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="fixed inset-0 z-[111] flex items-center justify-center p-4"
           >
-            <div className="w-full max-w-lg bg-[#0A0E11]/98 backdrop-blur-2xl border border-white/[0.08] rounded-2xl shadow-2xl overflow-hidden">
+            <div className="w-full max-w-3xl bg-[#0A0E11]/98 backdrop-blur-2xl border border-white/[0.08] rounded-2xl shadow-2xl overflow-hidden">
 
               {/* ─── Header ─── */}
               <div className="px-6 py-5 flex items-center justify-between border-b border-white/[0.06]">
