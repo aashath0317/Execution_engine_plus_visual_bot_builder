@@ -9,6 +9,7 @@ import NodeLibrary from './NodeLibrary';
 import Canvas from './Canvas';
 import PropertiesPanel from './PropertiesPanel';
 import { useCanvasState } from './useCanvasState';
+import RichTextEditor from '../../components/ui/RichTextEditor';
 
 const VisualBuilder = () => {
   const state = useCanvasState();
@@ -20,6 +21,7 @@ const VisualBuilder = () => {
     name: '',
     description: '',
     image: '',
+    screenshots: [],
     tags: '',
     price: 'Free',
     category: 'grid'
@@ -41,6 +43,24 @@ const VisualBuilder = () => {
     }
   };
 
+  const handleScreenshotUpload = (e) => {
+    const files = Array.from(e.target.files || []);
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPublishForm(prev => ({ ...prev, screenshots: [...prev.screenshots, reader.result] }));
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeScreenshot = (indexToRemove) => {
+    setPublishForm(prev => ({
+      ...prev,
+      screenshots: prev.screenshots.filter((_, idx) => idx !== indexToRemove)
+    }));
+  };
+
   const handlePublishClick = () => {
     setPublishForm(prev => ({ ...prev, name: state.strategyName }));
     setIsPublishModalOpen(true);
@@ -59,6 +79,7 @@ const VisualBuilder = () => {
       name: publishForm.name || 'Untitled Strategy',
       description: publishForm.description || 'Custom strategy created via Visual Builder',
       image: publishForm.image || '',
+      screenshots: publishForm.screenshots || [],
       tags: publishForm.tags ? publishForm.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
       type: 'visual',
       strategyType: 'visual',
@@ -307,12 +328,33 @@ const VisualBuilder = () => {
 
                 <div>
                   <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">Description</label>
-                  <textarea
-                    value={publishForm.description}
-                    onChange={(e) => setPublishForm({ ...publishForm, description: e.target.value })}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#00FF9D] transition-colors min-h-[100px] resize-none text-white leading-relaxed shadow-inner"
+                  <RichTextEditor
+                    content={publishForm.description}
+                    onChange={(html) => setPublishForm({ ...publishForm, description: html })}
                     placeholder="Describe your strategy logic and best use cases..."
                   />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">Screenshots</label>
+                  <div className="grid grid-cols-4 gap-3">
+                    {publishForm.screenshots.map((src, idx) => (
+                      <div key={idx} className="relative group aspect-video rounded-lg overflow-hidden border border-white/10">
+                        <img src={src} alt="screenshot" className="w-full h-full object-cover" />
+                        <button 
+                          onClick={() => removeScreenshot(idx)}
+                          className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-red-400 hover:text-red-300"
+                        >
+                          <X size={20} />
+                        </button>
+                      </div>
+                    ))}
+                    <label className="aspect-video rounded-lg border-2 border-dashed border-white/10 hover:border-[#00FF9D]/30 flex flex-col items-center justify-center cursor-pointer transition-colors bg-black/20 group">
+                      <ImageIcon size={20} className="text-gray-500 group-hover:text-[#00FF9D] mb-1 transition-colors" />
+                      <span className="text-[10px] text-gray-500 font-medium">Add Image</span>
+                      <input type="file" multiple className="hidden" accept="image/*" onChange={handleScreenshotUpload} />
+                    </label>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

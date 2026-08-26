@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  X, Globe, Lock, Tag, Eye, Upload, AlertCircle, CheckCircle, Zap
+  X, Globe, Lock, Tag, Eye, Upload, AlertCircle, CheckCircle, Zap, Image as ImageIcon
 } from 'lucide-react';
+import RichTextEditor from '../ui/RichTextEditor';
 
 const PublishBotModal = ({ isOpen, onClose, bot, onPublish }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [screenshots, setScreenshots] = useState([]);
   const [visibility, setVisibility] = useState('private');
   const [tags, setTags] = useState('');
   const [isPublishing, setIsPublishing] = useState(false);
@@ -15,12 +17,28 @@ const PublishBotModal = ({ isOpen, onClose, bot, onPublish }) => {
     if (bot) {
       setName(bot.name || '');
       setDescription(bot.description || '');
+      setScreenshots(bot.screenshots || []);
       setVisibility(bot.visibility || 'private');
       setTags((bot.tags || []).join(', '));
     }
   }, [bot]);
 
   if (!bot) return null;
+
+  const handleScreenshotUpload = (e) => {
+    const files = Array.from(e.target.files || []);
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setScreenshots(prev => [...prev, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeScreenshot = (indexToRemove) => {
+    setScreenshots(prev => prev.filter((_, idx) => idx !== indexToRemove));
+  };
 
   const handlePublish = async () => {
     setIsPublishing(true);
@@ -32,6 +50,7 @@ const PublishBotModal = ({ isOpen, onClose, bot, onPublish }) => {
       ...bot,
       name: name.trim() || bot.name,
       description: description.trim(),
+      screenshots,
       visibility,
       tags: tags.split(',').map(t => t.trim().toLowerCase()).filter(Boolean),
       updatedAt: new Date().toISOString(),
@@ -99,13 +118,34 @@ const PublishBotModal = ({ isOpen, onClose, bot, onPublish }) => {
                 {/* Description */}
                 <div>
                   <label className="block text-gray-400 text-[11px] font-semibold uppercase tracking-wider mb-2">Description</label>
-                  <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    rows={3}
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder:text-gray-600 outline-none focus:border-[#00FF9D]/30 transition-colors resize-none"
+                  <RichTextEditor
+                    content={description}
+                    onChange={setDescription}
                     placeholder="Describe your strategy..."
                   />
+                </div>
+
+                {/* Screenshots */}
+                <div>
+                  <label className="block text-gray-400 text-[11px] font-semibold uppercase tracking-wider mb-2">Screenshots</label>
+                  <div className="grid grid-cols-4 gap-3">
+                    {screenshots.map((src, idx) => (
+                      <div key={idx} className="relative group aspect-video rounded-lg overflow-hidden border border-white/10">
+                        <img src={src} alt="screenshot" className="w-full h-full object-cover" />
+                        <button 
+                          onClick={() => removeScreenshot(idx)}
+                          className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-red-400 hover:text-red-300"
+                        >
+                          <X size={20} />
+                        </button>
+                      </div>
+                    ))}
+                    <label className="aspect-video rounded-lg border-2 border-dashed border-white/10 hover:border-[#00FF9D]/30 flex flex-col items-center justify-center cursor-pointer transition-colors bg-white/[0.02] group">
+                      <ImageIcon size={20} className="text-gray-500 group-hover:text-[#00FF9D] mb-1 transition-colors" />
+                      <span className="text-[10px] text-gray-500 font-medium">Add Image</span>
+                      <input type="file" multiple className="hidden" accept="image/*" onChange={handleScreenshotUpload} />
+                    </label>
+                  </div>
                 </div>
 
                 {/* Privacy Toggle */}
