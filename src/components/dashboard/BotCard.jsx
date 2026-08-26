@@ -78,7 +78,7 @@ const BotCard = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onClick && onClick(bot)}
-      className="group relative rounded-2xl border cursor-pointer transition-all duration-500 overflow-hidden bg-[#0A0E11]/90 backdrop-blur-xl flex flex-col h-[360px]"
+      className="group relative rounded-2xl border cursor-pointer transition-all duration-500 overflow-hidden bg-[#0A0E11]/90 backdrop-blur-xl flex flex-col h-[440px]"
       style={{
         borderColor: isHovered ? style.border : style.bg,
         boxShadow: isHovered ? `0 0 30px ${style.bg}, 0 20px 40px rgba(0,0,0,0.3)` : `0 0 15px ${style.bg}`,
@@ -94,32 +94,21 @@ const BotCard = ({
       />
 
       {/* Top Banner Image & Tags */}
-      <div className="relative h-[160px] w-full shrink-0 border-b border-white/5 overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${style.bg}, rgba(10,14,17,0.9) 70%)` }}
-      >
-        {/* Cover Image as centered avatar */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          {bot.image ? (
-            <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 shadow-2xl group-hover:scale-110 transition-transform duration-500"
-              style={{ borderColor: style.border }}
-            >
-              <img 
-                src={bot.image} 
-                alt={bot.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ) : (
-            <div className="w-24 h-24 rounded-2xl flex items-center justify-center border-2 border-white/10"
-              style={{ background: `linear-gradient(135deg, ${style.bg}, transparent)` }}
-            >
-              <BotIcon size={36} className="text-white/30" />
-            </div>
-          )}
-        </div>
+      <div className="relative h-[240px] w-full shrink-0 bg-black/40 border-b border-white/5 overflow-hidden">
+        {bot.image ? (
+          <img 
+            src={bot.image} 
+            alt={bot.name}
+            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-white/5 to-white/0 flex items-center justify-center">
+            <BotIcon size={40} className="text-white/20" />
+          </div>
+        )}
 
         {/* Gradient Overlay for Top Badges */}
-        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/60 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/80 to-transparent" />
 
         {/* Top Badges (Tags & Price) */}
         <div className="absolute top-4 left-4 right-4 flex items-start justify-between z-10">
