@@ -9,7 +9,7 @@ import NodeLibrary from './NodeLibrary';
 import Canvas from './Canvas';
 import PropertiesPanel from './PropertiesPanel';
 import { useCanvasState } from './useCanvasState';
-import RichTextEditor from '../../components/ui/RichTextEditor';
+import RichTextEditor from '../../../components/ui/RichTextEditor';
 
 const VisualBuilder = () => {
   const state = useCanvasState();
