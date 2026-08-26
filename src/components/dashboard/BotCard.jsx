@@ -99,7 +99,7 @@ const BotCard = ({
           <img 
             src={bot.image} 
             alt={bot.name}
-            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+            className="w-full h-full object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-white/5 to-white/0 flex items-center justify-center">
