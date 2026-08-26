@@ -176,7 +176,7 @@ const BotCard = ({
 
         {bot.description && (
           <p className="text-gray-500 text-[11px] mt-2 line-clamp-2 leading-relaxed">
-            {bot.description}
+            {String(bot.description).replace(/<[^>]*>/g, '').trim() || ''}
           </p>
         )}
 
