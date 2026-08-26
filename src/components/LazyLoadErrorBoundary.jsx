@@ -14,18 +14,23 @@ class LazyLoadErrorBoundary extends React.Component {
     componentDidCatch(error, errorInfo) {
         console.error("LazyLoadErrorBoundary caught an error:", error, errorInfo);
 
-        // check if it's a chunk loading error
-        // Current error is: "Failed to fetch dynamically imported module" or similar
+        const errorStr = (error?.message || error?.stack || String(error) || '').toLowerCase();
+
+        // check if it's a chunk loading error (e.g. new deployment with new hashes)
         const isChunkError =
-            error.message.includes("Failed to fetch dynamically imported module") ||
-            error.message.includes("Importing a module script failed") ||
-            error.message.includes("missing") ||
-            error.name === 'ChunkLoadError';
+            errorStr.includes("failed to fetch dynamically imported module") ||
+            errorStr.includes("importing a module script failed") ||
+            errorStr.includes("missing") ||
+            errorStr.includes("chunk") ||
+            error?.name === 'ChunkLoadError';
 
         if (isChunkError) {
-            console.log("Chunk loading error detected. Reloading page to fetch fresh chunks...");
-            // Force a reload to get the new index.html which points to valid chunks
-            window.location.reload();
+            const hasReloaded = sessionStorage.getItem('chunk_reload_attempted');
+            if (!hasReloaded) {
+                sessionStorage.setItem('chunk_reload_attempted', 'true');
+                console.log("Chunk loading error detected. Reloading page to fetch fresh chunks...");
+                window.location.reload();
+            }
         }
     }
 
