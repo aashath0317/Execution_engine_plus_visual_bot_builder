@@ -77,7 +77,7 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const RichTextEditor = ({ content, onChange, placeholder }) => {
+const RichTextEditor = ({ content, onChange, placeholder, className }) => {
   const editor = useEditor({
     extensions: [StarterKit],
     content: content || '',
@@ -86,7 +86,7 @@ const RichTextEditor = ({ content, onChange, placeholder }) => {
     },
     editorProps: {
       attributes: {
-        class: 'prose prose-sm prose-invert focus:outline-none min-h-[120px] max-h-[300px] overflow-y-auto p-4 text-sm text-gray-300 [&>p]:mt-0 [&>p]:mb-2 [&>h1]:text-white [&>h1]:text-xl [&>h1]:font-bold [&>h1]:mb-3 [&>h2]:text-white [&>h2]:text-lg [&>h2]:font-bold [&>h2]:mb-2 [&>ul]:list-disc [&>ul]:ml-4 [&>ol]:list-decimal [&>ol]:ml-4 [&>blockquote]:border-l-2 [&>blockquote]:border-[#00FF9D] [&>blockquote]:pl-3 [&>blockquote]:italic [&>blockquote]:text-gray-400',
+        class: 'prose prose-sm prose-invert focus:outline-none min-h-[200px] overflow-y-auto p-4 text-sm text-gray-300 [&>p]:mt-0 [&>p]:mb-2 [&>h1]:text-white [&>h1]:text-xl [&>h1]:font-bold [&>h1]:mb-3 [&>h2]:text-white [&>h2]:text-lg [&>h2]:font-bold [&>h2]:mb-2 [&>ul]:list-disc [&>ul]:ml-4 [&>ol]:list-decimal [&>ol]:ml-4 [&>blockquote]:border-l-2 [&>blockquote]:border-[#00FF9D] [&>blockquote]:pl-3 [&>blockquote]:italic [&>blockquote]:text-gray-400',
       },
     },
   });
@@ -99,9 +99,9 @@ const RichTextEditor = ({ content, onChange, placeholder }) => {
   }, [content, editor]);
 
   return (
-    <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl overflow-hidden focus-within:border-[#00FF9D]/30 transition-colors">
+    <div className={cn("bg-white/[0.04] border border-white/[0.08] rounded-xl overflow-hidden focus-within:border-[#00FF9D]/30 transition-colors flex flex-col", className)}>
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} className="cursor-text" />
+      <EditorContent editor={editor} className="cursor-text flex-1 overflow-y-auto" />
     </div>
   );
 };
